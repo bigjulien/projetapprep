@@ -1,26 +1,39 @@
+/**
+ * Created by ZHU Yuting on 2015/05/07
+ */
 package client;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.management.remote.rmi.RMIConnection;
 
 import serveur.Login;
-import serveur.LoginImpl;
-import user.User;
 
 public class Client {
 
-    User user;
-    public Client(){}
+    public Client() {
+    }
+
     public static void main(String[] args) {
-        Client client=new Client();
         try {
-            Login l=(Login)Naming.lookup("rmi://localhost:8888/Login");
+            System.out.println("Client running...");
+            Login l = (Login) Naming
+                    .lookup("rmi://127.0.0.1:8888/LoginServeur");
+            System.out.println("connect success!");
+            l.addUser("abc", "abc");
+            l.login("", "");
+            System.out.println(l.login("abc", "abc"));
+            System.out.println(l.login("abc", "a"));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (RemoteException e) {
-            e.printStackTrace();
+            Logger.getLogger(RMIConnection.class.getName()).log(Level.SEVERE,
+                    null, e);
         } catch (NotBoundException e) {
             e.printStackTrace();
         }

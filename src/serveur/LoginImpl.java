@@ -1,24 +1,28 @@
+/**
+ * Created by ZHU Yuting on 2015/05/07
+ */
 package serveur;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 
 import user.User;
+import user.UserOperation;
 
 public class LoginImpl extends UnicastRemoteObject implements Login {
 
-    public ArrayList<User> userList;
-
     protected LoginImpl() throws RemoteException {
         super();
-        userList = new ArrayList<>();
     }
 
     @Override
     public boolean login(String name, String password) throws RemoteException {
-        // TODO Auto-generated method stub
-        return false;
+        return UserOperation.login(name, password);
     }
 
+    @Override
+    public void addUser(String name, String password) throws RemoteException {
+        UserOperation.addUser(name, password);
     }
+
+}
