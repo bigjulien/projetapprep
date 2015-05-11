@@ -1,21 +1,25 @@
 package test;
 
-import topics.MessageManager;
+import javax.jms.JMSException;
+
+import topics.Publisher;
+import topics.Subscriber;
 
 public class Main {
 
-	public static void main(String[] args) {
-	MessageManager  m = new MessageManager("toto");
+	public static void main(String[] args) throws JMSException {
+	Publisher p = new Publisher("Moa");
+	Subscriber s = new Subscriber();
 	String[] ht = {"yolo","bidule","truc"};
 	String[] ht2 = {"yolo","bidule"};
 	String[] ht3 = {"yolo"};
 	String[] ht4 = {"truc"};
 	
 	
-	m.lancerLecture(ht2);
-	m.publier("Salut les copains", ht);
-	m.abonner("truc");
-	m.publier("Blah", ht4);
+	s.lancerLecture(ht2);
+	p.publier("Salut les copains", ht);
+	s.abonner("truc");
+	p.publier("Blah", ht4);
 
 	}
 

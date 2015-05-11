@@ -2,6 +2,7 @@ package topics;
 
 import java.util.Hashtable;
 
+
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
@@ -25,7 +26,7 @@ public class Publisher{
     InitialContext context = null;
     String username;
     
-    Publisher(String username)
+    public Publisher(String username)
     {
     	try {
 			configurer();
@@ -65,6 +66,15 @@ public class Publisher{
     public void publier(String message,String[] hashtags) throws JMSException{
     	TextMessage mess = sendSession.createTextMessage(message);
     	mess.setStringProperty("@", username);
+    	if( hashtags.length > 1)
+    	{
+    		mess.setBooleanProperty("duplica", true);
+    	}
+    	else
+    	{
+    		mess.setBooleanProperty("duplica", false);
+    	}
+    	mess.setStringProperty("@", username);
     	
     	Topic topic;
     	for (int i = 0; i < hashtags.length; i++) {
@@ -77,6 +87,7 @@ public class Publisher{
 				topic = sendSession.createTopic(hashtags[i]);
 			}
     		mess.setStringProperty("#", topic.getTopicName());
+    		mess.setIntProperty("id",message.hashCode());
     		sender = sendSession.createProducer(topic);
     		sender.send(mess); // equivaut à publier dans le topic
     	}

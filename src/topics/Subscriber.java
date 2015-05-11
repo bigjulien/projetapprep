@@ -1,5 +1,7 @@
 package topics;
 import java.util.Hashtable;
+import java.awt.Color;
+
 
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
@@ -21,7 +23,7 @@ public class Subscriber implements javax.jms.MessageListener{
     private javax.jms.Session receiveSession = null;
     InitialContext context = null;
     private final static int MAXRECEIVE =100;
-   
+    int hashCode;
 
 	public void lancerLecture(String[] hashtags) throws JMSException {
         
@@ -74,9 +76,20 @@ public class Subscriber implements javax.jms.MessageListener{
 		// Methode permettant au souscripteur de consommer effectivement chaque msg recu
 		// via le topic auquel il a souscrit
 		try {
-			System.out.print("#"+((TextMessage) message).getStringProperty("#")+" ");
-			System.out.println("@"+((TextMessage) message).getStringProperty("@")+":");
-			System.out.println(((TextMessage) message).getText());
+			if(((TextMessage) message).getBooleanProperty("duplica"))
+			{
+				System.err.println("@"+((TextMessage) message).getStringProperty("@")+":");
+				System.err.println(((TextMessage) message).getText());			
+				System.err.println("#"+((TextMessage) message).getStringProperty("#")+" ");
+				System.out.println("----------------------------------------------------");
+			}
+			else {
+				System.out.println("@"+((TextMessage) message).getStringProperty("@")+":");
+				System.out.println(((TextMessage) message).getText());			
+				System.out.println("#"+((TextMessage) message).getStringProperty("#")+" ");
+				System.out.println("----------------------------------------------------");
+				
+			}
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
