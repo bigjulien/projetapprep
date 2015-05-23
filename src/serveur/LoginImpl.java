@@ -6,9 +6,11 @@ package serveur;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import user.User;
-import user.UserOperation;
-
+/**
+ * Implémentation du login et de l'ajout d'utilisateur
+ * @author user
+ *
+ */
 public class LoginImpl extends UnicastRemoteObject implements Login {
 
     protected LoginImpl() throws RemoteException {
