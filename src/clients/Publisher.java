@@ -82,7 +82,6 @@ public class Publisher{
     */
     public void publier(String message,String[] hashtags) throws JMSException{
     	TextMessage mess = sendSession.createTextMessage(message);
-    	System.out.println(hashtags.length);
     	//On donne l'utilisateur
     	mess.setStringProperty("@", username);
     	//Si on plus de un hashtags cela peut générer des duplicatas
